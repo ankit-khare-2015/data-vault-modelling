@@ -69,8 +69,8 @@ Apparel : Total Revenue = 240
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/fashion-data-vault.git
-cd fashion-data-vault
+git clone https://github.com/ankit-khare-2015/data-vault-modelling.git
+cd data-vault-modelling
 ```
 
 ### 2. Start Docker
