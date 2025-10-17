@@ -1,4 +1,4 @@
-#  Fashion Data Vault — dbt + Postgres + Grafana
+#  Fashion Data Vault with dbt + Postgres + Grafana
 
 This project demonstrates **Data Vault 2.0 modeling** using the **Fashion Retail domain** (Customers, Products, Stores, Sales).  
 It is dockerized with **Postgres, dbt, and Grafana** for easy setup and exploration.  
@@ -15,7 +15,7 @@ The goal is to both **learn Data Vault concepts** and **see them in action with 
 
 Core building blocks:
 - **Hubs** : unique business keys (Customer, Product, Sale, Store)  
-- **Links** : relationships between hubs (Sale ↔ Customer, Sale ↔ Product, Sale ↔ Store)  
+- **Links** : relationships between hubs (Sale <-> Customer, Sale <-> Product, Sale <-> Store)  
 - **Satellites** : descriptive attributes and history (price, status, quantity)  
 - **PIT** : Point-in-Time tables that join hubs, links, and satellites into usable snapshots  
 - **Marts** : business-friendly stars/KPIs for BI tools  
