@@ -1,0 +1,14 @@
+
+    
+    
+    
+    create table "analytics"."public"."stores" ("store_id" integer,"store_name" text,"city" text,"country" text)
+  ;
+    -- dbt seed --
+    
+          insert into "analytics"."public"."stores" ("store_id", "store_name", "city", "country") values
+          (%s,%s,%s,%s),(%s,%s,%s,%s),(%s,%s,%s,%s)
+      
+
+;
+  

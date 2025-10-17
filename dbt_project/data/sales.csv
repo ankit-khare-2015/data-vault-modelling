@@ -1,0 +1,4 @@
+sale_id,customer_id,product_id,store_id,quantity,total_amount,status
+1001,1,101,201,2,120,Completed
+1002,2,102,202,1,120,Completed
+1003,3,103,203,3,270,Returned

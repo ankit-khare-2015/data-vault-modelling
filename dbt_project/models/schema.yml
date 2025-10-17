@@ -1,0 +1,150 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw source data loaded via dbt seeds"
+    schema: public
+    tables:
+      - name: customers
+        description: "Raw customers data"
+        columns:
+          - name: customer_id
+            tests: [not_null, unique]
+      - name: products
+        description: "Raw products data"
+        columns:
+          - name: product_id
+            tests: [not_null, unique]
+      - name: stores
+        description: "Raw stores data"
+        columns:
+          - name: store_id
+            tests: [not_null, unique]
+      - name: sales
+        description: "Raw sales data"
+        columns:
+          - name: sale_id
+            tests: [not_null, unique]
+
+models:
+
+  # ─── STAGING ────────────────────────────────
+  - name: stg_customers
+    description: "Staging table for customers"
+    columns:
+      - name: customer_id
+        description: "Natural key"
+      - name: customer_name
+      - name: city
+      - name: country
+
+  - name: stg_products
+    description: "Staging table for products"
+    columns:
+      - name: product_id
+        description: "Natural key"
+      - name: product_name
+      - name: category
+      - name: price
+
+  - name: stg_stores
+    description: "Staging table for stores"
+    columns:
+      - name: store_id
+        description: "Natural key"
+      - name: store_name
+      - name: city
+      - name: country
+
+  - name: stg_sales
+    description: "Staging table for sales"
+    columns:
+      - name: sale_id
+        description: "Natural key"
+      - name: customer_id
+        description: "FK to customer"
+      - name: product_id
+        description: "FK to product"
+      - name: store_id
+        description: "FK to store"
+      - name: quantity
+      - name: total_amount
+      - name: status
+
+  # ─── HUBS ────────────────────────────────
+  - name: hub_customer
+    description: "Hub for customers"
+    columns:
+      - name: customer_hk
+        tests: [not_null, unique]
+      - name: customer_id
+
+  - name: hub_product
+    description: "Hub for products"
+    columns:
+      - name: product_hk
+        tests: [not_null, unique]
+      - name: product_id
+
+  - name: hub_store
+    description: "Hub for stores"
+    columns:
+      - name: store_hk
+        tests: [not_null, unique]
+      - name: store_id
+
+  - name: hub_sale
+    description: "Hub for sales"
+    columns:
+      - name: sale_hk
+        tests: [not_null, unique]
+      - name: sale_id
+
+  # ─── LINKS ────────────────────────────────
+  - name: link_sale_customer
+    description: "Link associating sales with customers"
+    columns:
+      - name: sale_hk
+      - name: customer_hk
+
+  - name: link_sale_product
+    description: "Link associating sales with products"
+    columns:
+      - name: sale_hk
+      - name: product_hk
+
+  - name: link_sale_store
+    description: "Link associating sales with stores"
+    columns:
+      - name: sale_hk
+      - name: store_hk
+
+  # ─── SATELLITES ────────────────────────────────
+  - name: sat_sale_transaction
+    description: "Satellite with sale measures"
+    columns:
+      - name: sale_hk
+      - name: quantity
+      - name: total_amount
+      - name: status
+
+  - name: sat_product_details
+    description: "Satellite with product details"
+    columns:
+      - name: product_hk
+      - name: product_name
+      - name: category
+      - name: price
+
+  # ─── PIT ────────────────────────────────
+  - name: pit_sales
+    description: "Point-in-time view combining sales hubs, links, satellites"
+
+  # ─── MARTS ────────────────────────────────
+  - name: mart_sales_summary
+    description: "Mart summarizing sales by category"
+    columns:
+      - name: category
+      - name: total_revenue
+      - name: total_sales
+      - name: returns
