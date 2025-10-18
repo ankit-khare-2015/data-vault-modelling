@@ -76,7 +76,6 @@ cd data-vault-modelling
 ### 2. Start Docker
 
 ```bash
-cd docker
 docker compose up -d
 ```
 
